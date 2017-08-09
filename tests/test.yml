@@ -3,5 +3,6 @@
   become: true
   vars:
     app_user: "app_user"
+    app_group: "app_group"
   roles:
     - application_role

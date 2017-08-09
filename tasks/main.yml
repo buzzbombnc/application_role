@@ -2,3 +2,6 @@
 - name: "validate app_user exists and <32 characters"
   set_fact:
     app_user: "{{ (app_user|mandatory)[:32] }}"
+- name: "validate app_group is <16 characters"
+  set_fact:
+    app_group: "{{ (app_group|default(app_user))[:16] }}"
