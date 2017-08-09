@@ -4,5 +4,6 @@
   vars:
     app_user: "app_user"
     app_group: "app_group"
+    app_admin_group: "app_admin_group"
   roles:
     - application_role

@@ -5,3 +5,10 @@
 - name: "validate app_group is <16 characters"
   set_fact:
     app_group: "{{ (app_group|default(app_user))[:16] }}"
+- name: "set default app_admin_group if not set"
+  set_fact:
+    app_admin_group: "{{ (app_admin_group|default(app_group))[:10] }}_admin"
+  when: "app_admin_group is not defined"
+- name: "validate app_admin_group is <16 characters"
+  set_fact:
+    app_admin_group: "{{ (app_admin_group|mandatory)[:16] }}"
