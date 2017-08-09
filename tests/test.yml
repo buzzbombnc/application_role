@@ -1,5 +1,7 @@
 ---
 - hosts: localhost
-  remote_user: root
+  become: true
+  vars:
+    app_user: "app_user"
   roles:
     - application_role

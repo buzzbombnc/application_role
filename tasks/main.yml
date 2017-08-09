@@ -1,2 +1,4 @@
 ---
-# tasks file for application
+- name: "validate app_user exists and <32 characters"
+  set_fact:
+    app_user: "{{ (app_user|mandatory)[:32] }}"
