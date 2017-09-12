@@ -1,14 +1,32 @@
 ---
-- name: "validate app_user exists and <32 characters"
+- name: "validate app_user"
+  assert:
+    that:
+      - "app_user is defined"
+      - "app_user|length <= 32"
+    msg: "'app_user' must be defined and <= 32 characters"
+
+- name: "set app_group to app_user"
   set_fact:
-    app_user: "{{ (app_user|mandatory)[:32] }}"
-- name: "validate app_group is <16 characters"
+    app_group: "{{ app_user[:16] }}"
+  when: "app_group is not defined"
+
+- name: "validate app_group"
+  assert:
+    that:
+      - "app_group is defined"
+      - "app_group|length <= 16"
+    msg: "'app_group' must be defined and <= 16 characters"
+
+- name: "set app_admin_group"
   set_fact:
-    app_group: "{{ (app_group|default(app_user))[:16] }}"
-- name: "set default app_admin_group if not set"
-  set_fact:
-    app_admin_group: "{{ (app_admin_group|default(app_group))[:10] }}_admin"
+    app_admin_group: "{{ app_group[:10] }}_admin"
   when: "app_admin_group is not defined"
-- name: "validate app_admin_group is <16 characters"
-  set_fact:
-    app_admin_group: "{{ (app_admin_group|mandatory)[:16] }}"
+
+- name: "validate app_admin_group"
+  assert:
+    that:
+      - "app_admin_group is defined"
+      - "app_admin_group|length <= 16"
+    msg: "'app_admin_group' must be defined and <= 16 characters"
+
