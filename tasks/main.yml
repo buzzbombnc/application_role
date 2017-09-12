@@ -18,15 +18,32 @@
       - "app_group|length <= 16"
     msg: "'app_group' must be defined and <= 16 characters"
 
-- name: "set app_admin_group"
-  set_fact:
-    app_admin_group: "{{ app_group[:10] }}_admin"
-  when: "app_admin_group is not defined"
+- block:
+  - name: "set app_admin_group"
+    set_fact:
+      app_admin_group: "{{ app_group[:10] }}_admin"
+    when: "app_admin_group is not defined"
 
-- name: "validate app_admin_group"
-  assert:
-    that:
-      - "app_admin_group is defined"
-      - "app_admin_group|length <= 16"
-    msg: "'app_admin_group' must be defined and <= 16 characters"
+  - name: "validate app_admin_group"
+    assert:
+      that:
+        - "app_admin_group is defined"
+        - "app_admin_group|length <= 16"
+      msg: "'app_admin_group' must be defined and <= 16 characters"
 
+  - name: "set app_admin_users"
+    set_fact:
+      app_admin_users: "{{ ansible_user_id }}"
+    when: "app_admin_users is not defined"
+
+  - name: "validate app_admin_users"
+    assert:
+      that: "app_admin_users is defined"
+  when: "app_admin_sudo|default(false)"
+
+- debug: var=app_user
+- debug: var=app_group
+- debug: var=app_admin_sudo
+- debug: var=app_admin_group
+- debug: var=app_admin_users
+- debug: var=ansible_user_id
