@@ -48,9 +48,17 @@
     become: true
   when: "app_admin_sudo|default(false)"
 
-- debug: var=app_user
-- debug: var=app_group
-- debug: var=app_admin_sudo
+- block:
+  - name: "create application group"
+    group:
+      name: "{{ app_group }}"
+      state: present
+
+  - name: "create application user"
+    user:
+      name: "{{ app_user }}"
+      group: "{{ app_group }}"
+  become: true
 - debug: var=app_admin_group
 - debug: var=app_admin_users
 - debug: var=ansible_user_id
