@@ -45,6 +45,8 @@
 
   - name: "ensure that sudo is properly configured before changes"
     command: '/usr/sbin/visudo -c'
+    check_mode: no
+    changed_when: false
     become: true
   when: "app_admin_sudo|default(false)"
 
