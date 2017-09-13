@@ -39,6 +39,10 @@
   - name: "validate app_admin_users"
     assert:
       that: "app_admin_users is defined"
+
+  - name: "ensure that sudo is properly configured before changes"
+    command: '/usr/sbin/visudo -c'
+    become: true
   when: "app_admin_sudo|default(false)"
 
 - debug: var=app_user
