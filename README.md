@@ -28,7 +28,7 @@ The following variables are defined in vars/main.yml:
 | app_admin_users | false    | Application admin user(s).  Defaults to '{{ ansible_user }}'.  |
 | app_admin_sudo  | false    | Allow admins to `sudo` to '{{ app_user }}' without password.   |
 
-* `app_admin_users` can be a string or a list.
+* `app_admin_users` must be a list.
 
 Dependencies
 ------------

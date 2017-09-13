@@ -33,12 +33,15 @@
 
   - name: "set app_admin_users"
     set_fact:
-      app_admin_users: "{{ ansible_user_id }}"
+     app_admin_users:
+        - "{{ ansible_user_id }}"
     when: "app_admin_users is not defined"
 
-  - name: "validate app_admin_users"
+  - name: "validate app_admin_users is a list"
     assert:
-      that: "app_admin_users is defined"
+      that:
+        - "app_admin_users is defined"
+        - "app_admin_users is iterable and app_admin_users is not string"
 
   - name: "ensure that sudo is properly configured before changes"
     command: '/usr/sbin/visudo -c'
