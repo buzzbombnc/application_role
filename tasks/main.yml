@@ -74,5 +74,14 @@
       groups: "{{ app_admin_group }}"
       append: yes
     with_items: "{{ app_admin_users }}"
+
+  - name: "create sudoers.d file"
+    template:
+      src: "sudoers.d.j2"
+      dest: "/etc/sudoers.d/{{ app_admin_group }}"
+      owner: root
+      group: root
+      mode: 0440
+      validate: '/usr/sbin/visudo -c -f %s'
   become: true
   when: "app_admin_sudo|default(false)"

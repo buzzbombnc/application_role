@@ -1,0 +1,5 @@
+{{ ansible_managed | comment }}
+#
+# All users in the group '{{ app_admin_group }}' are allowed to execute
+# commands as user '{{ app_user }}' with no password.
+%{{ app_admin_group }} ALL=({{ app_user }}) NOPASSWD: ALL
