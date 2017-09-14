@@ -61,6 +61,18 @@
       name: "{{ app_user }}"
       group: "{{ app_group }}"
   become: true
-- debug: var=app_admin_group
-- debug: var=app_admin_users
-- debug: var=ansible_user_id
+
+- block:
+  - name: "create application administration group"
+    group:
+      name: "{{ app_admin_group }}"
+      state: present
+
+  - name: "make user an application administrator"
+    user:
+      name: "{{ item }}"
+      groups: "{{ app_admin_group }}"
+      append: yes
+    with_items: "{{ app_admin_users }}"
+  become: true
+  when: "app_admin_sudo|default(false)"

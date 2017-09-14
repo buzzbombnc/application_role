@@ -4,7 +4,8 @@
     app_user: "app_user"
     app_group: "app_group"
     app_admin_group: "app_admin"
-#    app_admin_users: "a,b,c"
+#    app_admin_users:
+#      - buzzbomb
     app_admin_sudo: true
   roles:
     - application_role
